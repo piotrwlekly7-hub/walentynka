@@ -5,29 +5,22 @@
 <title>Walentynka ❤️</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
-
     body {
         margin: 0;
         height: 100vh;
-        background: linear-gradient(120deg, #ff9a9e, #fad0c4);
         font-family: Arial, sans-serif;
-        overflow: hidden;
+        background: linear-gradient(120deg, #ff9a9e, #fad0c4);
         display: flex;
         justify-content: center;
         align-items: center;
+        text-align: center;
     }
 
     .container {
-        background: #fff;
+        background-color: white;
         padding: 40px;
         border-radius: 20px;
         box-shadow: 0 0 20px rgba(0,0,0,0.2);
-        text-align: center;
-        position: relative;
-        z-index: 10;
     }
 
     h1 {
@@ -52,7 +45,6 @@
     #no {
         background-color: #e63946;
         color: white;
-        position: absolute;
     }
 
     #message {
@@ -61,40 +53,18 @@
         color: #e63946;
         display: none;
     }
-
-    /* ===== SERDUSZKA ===== */
-    #hearts {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 5;
-    }
-
-    .heart {
-        position: absolute;
-        top: -40px;
-        animation: fall 4s linear forwards;
-        user-select: none;
-    }
-
-    @keyframes fall {
-        to {
-            transform: translateY(110vh);
-            opacity: 0;
-        }
-    }
 </style>
 </head>
 
 <body>
 
-<div id="hearts"></div>
-
 <div class="container">
     <h1>💖 Czy zostaniesz moją walentynką? 💖</h1>
 
-    <button id="yes">Tak 😍</button>
-    <button id="no">Nie 😢</button>
+    <div id="buttons">
+        <button id="yes">Tak 😍</button>
+        <button id="no">Nie 😢</button>
+    </div>
 
     <div id="message">
         JUPIII! 🥰💕<br>
@@ -103,45 +73,18 @@
 </div>
 
 <script>
-    const noBtn = document.getElementById("no");
-    const yesBtn = document.getElementById("yes");
+    const yesButton = document.getElementById("yes");
+    const buttons = document.getElementById("buttons");
     const message = document.getElementById("message");
-    const hearts = document.getElementById("hearts");
 
-    // Uciekające NIE
-    noBtn.addEventListener("mouseover", () => {
-        const x = Math.random() * (window.innerWidth - 100);
-        const y = Math.random() * (window.innerHeight - 50);
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
-    });
-
-    // Tworzenie serduszka
-    function createHeart() {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.textContent = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = 20 + Math.random() * 20 + "px";
-
-        hearts.appendChild(heart);
-
-        setTimeout(() => heart.remove(), 4000);
-    }
-
-    // Klik TAK
-    yesBtn.addEventListener("click", () => {
-        message.style.display = "block";
-
-        // start animacji tylko raz
-        if (!yesBtn.dataset.started) {
-            yesBtn.dataset.started = "true";
-            setInterval(createHeart, 200);
-        }
+    yesButton.addEventListener("click", () => {
+        buttons.style.display = "none"; // 🔥 przyciski znikają
+        message.style.display = "block"; // ❤️ pokazuje się tekst
     });
 </script>
 
 </body>
 </html>
+
 
 
