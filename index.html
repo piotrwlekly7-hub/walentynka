@@ -62,18 +62,21 @@
     /* SERDUSZKA */
     .heart {
         position: fixed;
-        top: -20px;
-        color: #e63946;
-        font-size: 20px;
+        top: -30px;
+        font-size: 30px;
         animation: fall linear forwards;
-        z-index: 1;
-        user-select: none;
+        z-index: 9999; /* 🔥 NAJWAŻNIEJSZE */
         pointer-events: none;
+        user-select: none;
     }
 
     @keyframes fall {
-        to {
-            transform: translateY(110vh);
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(110vh) rotate(360deg);
             opacity: 0;
         }
     }
@@ -99,10 +102,11 @@
     const yesButton = document.getElementById("yes");
     const message = document.getElementById("message");
 
+    let heartsStarted = false;
+
     // UCIEKAJĄCE "NIE"
     noButton.addEventListener("mouseover", () => {
         const rect = noButton.getBoundingClientRect();
-
         const maxX = window.innerWidth - rect.width;
         const maxY = window.innerHeight - rect.height;
 
@@ -110,30 +114,32 @@
         noButton.style.top = Math.random() * maxY + "px";
     });
 
-    // SERDUSZKA
+    // TWORZENIE SERDUSZKA
     function createHeart() {
         const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "❤️";
+        heart.className = "heart";
+        heart.innerText = "❤️";
 
         heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = Math.random() * 20 + 15 + "px";
-        heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        heart.style.fontSize = (Math.random() * 20 + 25) + "px";
 
         document.body.appendChild(heart);
 
-        setTimeout(() => {
-            heart.remove();
-        }, 5000);
+        setTimeout(() => heart.remove(), 6000);
     }
 
     // KLIK "TAK"
     yesButton.addEventListener("click", () => {
         message.style.display = "block";
 
-        setInterval(createHeart, 300);
+        if (!heartsStarted) {
+            heartsStarted = true;
+            setInterval(createHeart, 250);
+        }
     });
 </script>
 
 </body>
 </html>
+
