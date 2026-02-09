@@ -114,12 +114,9 @@ const secondPage = document.getElementById("secondPage");
 
 // Uciekający przycisk "Nie"
 noButton.addEventListener("mouseover", function() {
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
-
-    noButton.style.left = x + "px";
-    noButton.style.top = y + "px";
+    noButton.style.display = "none";
 });
+
 
 // Przejście na drugą stronę
 yesButton.addEventListener("click", function() {
