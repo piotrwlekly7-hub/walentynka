@@ -24,6 +24,7 @@
         border-radius: 20px;
         box-shadow: 0 0 20px rgba(0,0,0,0.2);
         position: relative;
+        z-index: 2;
     }
 
     h1 {
@@ -57,6 +58,25 @@
         color: #e63946;
         display: none;
     }
+
+    /* SERDUSZKA */
+    .heart {
+        position: fixed;
+        top: -20px;
+        color: #e63946;
+        font-size: 20px;
+        animation: fall linear forwards;
+        z-index: 1;
+        user-select: none;
+        pointer-events: none;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(110vh);
+            opacity: 0;
+        }
+    }
 </style>
 </head>
 
@@ -79,21 +99,39 @@
     const yesButton = document.getElementById("yes");
     const message = document.getElementById("message");
 
+    // UCIEKAJĄCE "NIE"
     noButton.addEventListener("mouseover", () => {
-        const buttonRect = noButton.getBoundingClientRect();
+        const rect = noButton.getBoundingClientRect();
 
-        const maxX = window.innerWidth - buttonRect.width;
-        const maxY = window.innerHeight - buttonRect.height;
+        const maxX = window.innerWidth - rect.width;
+        const maxY = window.innerHeight - rect.height;
 
-        const x = Math.random() * maxX;
-        const y = Math.random() * maxY;
-
-        noButton.style.left = x + "px";
-        noButton.style.top = y + "px";
+        noButton.style.left = Math.random() * maxX + "px";
+        noButton.style.top = Math.random() * maxY + "px";
     });
 
+    // SERDUSZKA
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 15 + "px";
+        heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }
+
+    // KLIK "TAK"
     yesButton.addEventListener("click", () => {
         message.style.display = "block";
+
+        setInterval(createHeart, 300);
     });
 </script>
 
