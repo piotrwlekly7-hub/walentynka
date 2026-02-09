@@ -5,145 +5,91 @@
 <title>Walentynka ❤️</title>
 
 <style>
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(120deg, #ff9a9e, #fad0c4);
-    height: 100vh;
-    overflow: hidden;
-}
-
-.screen {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.container {
-    background-color: white;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    position: relative;
-    z-index: 2;
-}
-
-h1 {
-    color: #e63946;
-    margin-bottom: 30px;
-}
-
-button {
-    padding: 10px 25px;
-    font-size: 18px;
-    margin: 10px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-#yes {
-    background-color: #2a9d8f;
-    color: white;
-}
-
-#no {
-    background-color: #e63946;
-    color: white;
-    position: absolute;
-}
-
-#secondPage {
-    display: none;
-}
-
-/* ANIMOWANE SERDUSZKA */
-
-.heart {
-    position: absolute;
-    color: red;
-    font-size: 20px;
-    animation: fall linear infinite;
-    opacity: 0.8;
-}
-
-@keyframes fall {
-    0% {
-        transform: translateY(-10vh);
-        opacity: 1;
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
     }
-    100% {
-        transform: translateY(110vh);
-        opacity: 0;
+
+    .container {
+        background-color: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
-}
+
+    h1 {
+        color: #e63946;
+        margin-bottom: 30px;
+    }
+
+    button {
+        padding: 10px 25px;
+        font-size: 18px;
+        margin: 10px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    #yes {
+        background-color: #2a9d8f;
+        color: white;
+    }
+
+    #no {
+        background-color: #e63946;
+        color: white;
+        position: absolute;
+    }
+
+    #message {
+        margin-top: 20px;
+        font-size: 22px;
+        color: #e63946;
+        display: none;
+    }
 </style>
 
 </head>
 <body>
 
-<!-- PIERWSZA STRONA -->
-<div id="firstPage" class="screen">
-    <div class="container">
-        <h1>💖 Czy zostaniesz moją walentynką? 💖</h1>
+<div class="container">
+    <h1>💖 Czy zostaniesz moją walentynką? 💖</h1>
 
-        <button id="yes">Tak 😍</button>
-        <button id="no">Nie 😢</button>
-    </div>
-</div>
+    <button id="yes">Tak 😍</button>
+    <button id="no">Nie 😢</button>
 
-<!-- DRUGA STRONA -->
-<div id="secondPage" class="screen">
-    <div class="container">
-        <h1>JUPIII! 🥰💕</h1>
-        <p>KOCHAM CIĘ NAJBARDZIEJ NA ŚWIECIE
-        <p> TWÓJ PIOTRR💕💕
-        
+    <div id="message">
+        JUPIII! 🥰💕  
+        Wiedziałem, że się zgodzisz! 😘
     </div>
 </div>
 
 <script>
-const noButton = document.getElementById("no");
-const yesButton = document.getElementById("yes");
+    const noButton = document.getElementById("no");
+    const yesButton = document.getElementById("yes");
+    const message = document.getElementById("message");
 
-const firstPage = document.getElementById("firstPage");
-const secondPage = document.getElementById("secondPage");
+    noButton.addEventListener("mouseover", function() {
+        const x = Math.random() * (window.innerWidth - 100);
+        const y = Math.random() * (window.innerHeight - 50);
 
-// Uciekający przycisk "Nie"
-noButton.addEventListener("mouseover", function() {
-    noButton.style.display = "none";
-});
+        noButton.style.left = x + "px";
+        noButton.style.top = y + "px";
+    });
 
-
-// Przejście na drugą stronę
-yesButton.addEventListener("click", function() {
-    firstPage.style.display = "none";
-    secondPage.style.display = "flex";
-});
-
-// FUNKCJA TWORZĄCA SERDUSZKA
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤️";
-
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
-    heart.style.fontSize = Math.random() * 20 + 10 + "px";
-
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 5000);
-}
-
-// Serduszka tworzą się cały czas
-setInterval(createHeart, 300);
+    yesButton.addEventListener("click", function() {
+        message.style.display = "block";
+    });
 </script>
 
 </body>
 </html>
+
