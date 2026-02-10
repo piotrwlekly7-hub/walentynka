@@ -5,84 +5,112 @@
 <title>Walentynka ❤️</title>
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(120deg, #ff9a9e, #fad0c4);
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        overflow: hidden;
-    }
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
 
-    .container {
-        background-color: white;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.2);
-        position: relative;
-        z-index: 2;
-    }
+/* ANIMACJE WEJŚCIA */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
 
-    h1 {
-        color: #e63946;
-        margin-bottom: 30px;
-    }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
 
-    button {
-        padding: 10px 25px;
-        font-size: 18px;
-        margin: 10px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-    }
+.container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 1s ease-out;
+}
 
-    #yes {
-        background-color: #2a9d8f;
-        color: white;
-    }
+h1 {
+    color: #e63946;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+}
 
-    #no {
-        background-color: #e63946;
-        color: white;
-        position: absolute;
-    }
+.kotek {
+    width: 180px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    animation: fadeIn 2s ease-out;
+}
 
-    #message {
-        margin-top: 20px;
-        font-size: 22px;
-        color: #e63946;
-        display: none;
-    }
+button {
+    padding: 10px 25px;
+    font-size: 18px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
 
-    /* SERDUSZKA */
-    .heart {
-        position: fixed;
-        top: -20px;
-        color: #e63946;
-        font-size: 20px;
-        animation: fall linear forwards;
-        z-index: 1;
-        user-select: none;
-        pointer-events: none;
-    }
+button:hover {
+    transform: scale(1.1);
+}
 
-    @keyframes fall {
-        to {
-            transform: translateY(110vh);
-            opacity: 0;
-        }
+#yes {
+    background-color: #2a9d8f;
+    color: white;
+}
+
+#no {
+    background-color: #e63946;
+    color: white;
+    position: absolute;
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 22px;
+    color: #e63946;
+    display: none;
+}
+
+/* SERDUSZKA */
+.heart {
+    position: fixed;
+    top: -20px;
+    color: #e63946;
+    font-size: 20px;
+    animation: fall linear forwards;
+    z-index: 1;
+    user-select: none;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+        opacity: 0;
     }
+}
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="container" id="box">
+    <img class="kotek" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="kotek">
+
     <h1>💖 Czy zostaniesz moją walentynką? 💖</h1>
 
     <button id="yes">Tak 😍</button>
@@ -90,53 +118,56 @@
 
     <div id="message">
         JUPIII! 🥰💕<br>
-        Wiedziałem, że się zgodzisz! 😘
+        KOCHAM CIĘ TWOJ PIOTRR 😘
     </div>
 </div>
 
 <script>
-    const noButton = document.getElementById("no");
-    const yesButton = document.getElementById("yes");
-    const message = document.getElementById("message");
+const noButton = document.getElementById("no");
+const yesButton = document.getElementById("yes");
+const message = document.getElementById("message");
 
-    // UCIEKAJĄCE "NIE"
-    noButton.addEventListener("mouseover", () => {
-        const rect = noButton.getBoundingClientRect();
+// LEPSZE UCIEKANIE – ZAWSZE W GRANICACH EKRANU
+noButton.addEventListener("mouseover", () => {
+    const buttonWidth = noButton.offsetWidth;
+    const buttonHeight = noButton.offsetHeight;
 
-        const maxX = window.innerWidth - rect.width;
-        const maxY = window.innerHeight - rect.height;
+    const maxX = window.innerWidth - buttonWidth - 20;
+    const maxY = window.innerHeight - buttonHeight - 20;
 
-        noButton.style.left = Math.random() * maxX + "px";
-        noButton.style.top = Math.random() * maxY + "px";
-    });
+    const newX = Math.random() * maxX;
+    const newY = Math.random() * maxY;
 
-    // SERDUSZKA
-    function createHeart() {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "❤️";
+    noButton.style.left = newX + "px";
+    noButton.style.top = newY + "px";
+});
 
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = Math.random() * 20 + 15 + "px";
-        heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+// SERDUSZKA
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
 
-        document.body.appendChild(heart);
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
 
-        setTimeout(() => {
-            heart.remove();
-        }, 5000);
-    }
+    document.body.appendChild(heart);
 
-    // KLIK "TAK"
-    yesButton.addEventListener("click", () => {
-        message.style.display = "block";
+    setTimeout(() => {
+        heart.remove();
+    }, 5000);
+}
 
-        setInterval(createHeart, 300);
-    });
+// KLIK "TAK"
+yesButton.addEventListener("click", () => {
+    message.style.display = "block";
+
+    setInterval(createHeart, 300);
+});
 </script>
 
 </body>
 </html>
-
 
 
