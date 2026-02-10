@@ -104,9 +104,7 @@ button:hover {
 
 <body>
 
-<!-- PIERWSZA STRONA -->
 <div id="firstPage" class="container">
-
     <img class="gif" 
     src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" 
     alt="kotek1">
@@ -117,9 +115,7 @@ button:hover {
     <button id="no">Nie 😢</button>
 </div>
 
-<!-- DRUGA STRONA -->
 <div id="secondPage" class="container">
-
     <img class="gif" 
     src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" 
     alt="kotek2">
@@ -127,7 +123,6 @@ button:hover {
     <h1>JUPIII! 🥰💕</h1>
     <p>KOCHAM CIĘ TWOJ PIOTRR 😘</p>
     <p>Najlepsza walentynka na świecie! 💖</p>
-
 </div>
 
 <script>
@@ -137,11 +132,9 @@ const yesButton = document.getElementById("yes");
 const firstPage = document.getElementById("firstPage");
 const secondPage = document.getElementById("secondPage");
 
-// startowa pozycja przycisku NIE
 noButton.style.left = "60%";
 noButton.style.top = "60%";
 
-// UCIEKANIE – NA PEWNO W GRANICACH EKRANU
 noButton.addEventListener("mouseover", () => {
     const buttonWidth = noButton.offsetWidth;
     const buttonHeight = noButton.offsetHeight;
@@ -156,7 +149,6 @@ noButton.addEventListener("mouseover", () => {
     noButton.style.top = newY + "px";
 });
 
-// SERDUSZKA
 function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
@@ -173,18 +165,24 @@ function createHeart() {
     }, 5000);
 }
 
-// PO KLIKNIĘCIU "TAK"
+// NORMALNA ILOŚĆ NA START
+let normalHearts = setInterval(createHeart, 400);
+
+// PO KLIKNIĘCIU "TAK" – WIĘCEJ KONFETTI
 yesButton.addEventListener("click", () => {
     firstPage.style.display = "none";
     noButton.style.display = "none";
 
     secondPage.style.display = "block";
 
-    setInterval(createHeart, 300);
+    // zatrzymujemy normalne tempo
+    clearInterval(normalHearts);
+
+    // DUŻO WIĘCEJ SERDUSZEK NA DRUGIEJ STRONIE
+    setInterval(createHeart, 80);
 });
 </script>
 
 </body>
 </html>
-
 
