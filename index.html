@@ -5,6 +5,8 @@
 <title>Walentynka ❤️</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
 body {
     margin: 0;
     padding: 0;
@@ -25,7 +27,7 @@ body {
 
 @keyframes pulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    50% { transform: scale(1.1); }
     100% { transform: scale(1); }
 }
 
@@ -109,6 +111,36 @@ button:hover {
 .pinkMode {
     animation: pinkBG 5s infinite;
 }
+
+/* KLIKALNE SERCE */
+.clickHeart {
+    font-size: 55px;
+    cursor: pointer;
+    margin: 20px 0;
+    animation: pulse 1.2s infinite;
+}
+
+/* WIADOMOŚĆ */
+.loveMessage {
+    font-family: 'Pacifico', cursive;
+    font-size: 30px;
+    color: #e63946;
+    margin-top: 20px;
+    min-height: 40px;
+}
+
+/* ISKIERKI */
+.sparkle {
+    position: fixed;
+    pointer-events: none;
+    font-size: 18px;
+    animation: sparkleAnim 1s forwards;
+}
+
+@keyframes sparkleAnim {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: translateY(-30px) scale(0.3); }
+}
 </style>
 </head>
 
@@ -116,12 +148,8 @@ button:hover {
 
 <!-- PIERWSZA STRONA -->
 <div id="firstPage" class="container">
-    <img class="gif" 
-    src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" 
-    alt="kotek1">
-
+    <img class="gif" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
     <h1>💖 Czy zostaniesz moją walentynką? 💖</h1>
-
     <button id="yes">Tak 😍</button>
     <button id="no">Nie 😫</button>
 </div>
@@ -129,80 +157,91 @@ button:hover {
 <!-- DRUGA STRONA -->
 <div id="secondPage" class="container">
 
-    <!-- NOWE SŁODKIE GIFY -->
-    <img class="gif" 
-    src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" 
-    alt="zakochane misie">
-
-    <img class="gif" 
-    src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" 
-    alt="przytulające się kotki">
+    <img class="gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+    <img class="gif" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
 
     <h1>JUPIII! 🥰💕</h1>
-    <p>KOCHAM CIĘ NAJMOCNIEJ</p>
-    <p>TWOJ PIOTRR 😘</p>
 
+    <div id="clickHeart" class="clickHeart">❤️</div>
+
+    <div id="loveMessage" class="loveMessage"></div>
+
+    <p>TWOJ PIOTRR 😘</p>
 </div>
 
 <script>
 const noButton = document.getElementById("no");
 const yesButton = document.getElementById("yes");
-
 const firstPage = document.getElementById("firstPage");
 const secondPage = document.getElementById("secondPage");
 
-noButton.style.left = "60%";
-noButton.style.top = "60%";
+const clickHeart = document.getElementById("clickHeart");
+const loveMessage = document.getElementById("loveMessage");
+
+const text = "jesteś najlepszym co mnie spotkało 💖🥹✨";
+let index = 0;
+let typed = false;
 
 noButton.addEventListener("mouseover", () => {
     noButton.style.position = "fixed";
-
-    const buttonWidth = noButton.offsetWidth;
-    const buttonHeight = noButton.offsetHeight;
-
-    const maxX = window.innerWidth - buttonWidth - 10;
-    const maxY = window.innerHeight - buttonHeight - 10;
-
-    const newX = Math.random() * maxX;
-    const newY = Math.random() * maxY;
-
-    noButton.style.left = newX + "px";
-    noButton.style.top = newY + "px";
+    noButton.style.left = Math.random() * (window.innerWidth - 100) + "px";
+    noButton.style.top = Math.random() * (window.innerHeight - 50) + "px";
 });
 
 function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
     heart.innerHTML = "❤️";
-
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.fontSize = Math.random() * 20 + 15 + "px";
     heart.style.animationDuration = Math.random() * 3 + 2 + "s";
-
     document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 5000);
+    setTimeout(() => heart.remove(), 5000);
 }
 
 let normalHearts = setInterval(createHeart, 400);
 
 yesButton.addEventListener("click", () => {
     firstPage.style.display = "none";
-    noButton.style.display = "none";
-
     secondPage.style.display = "block";
-
     document.body.classList.add("pinkMode");
-
     clearInterval(normalHearts);
-
     setInterval(createHeart, 80);
+});
+
+/* EFEKT PISANIA */
+function typeText() {
+    if (index < text.length) {
+        loveMessage.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeText, 70);
+    }
+}
+
+/* ISKIERKI */
+function createSparkles(x, y) {
+    for (let i = 0; i < 8; i++) {
+        const s = document.createElement("div");
+        s.classList.add("sparkle");
+        s.innerHTML = "✨";
+        s.style.left = x + (Math.random() * 40 - 20) + "px";
+        s.style.top = y + (Math.random() * 40 - 20) + "px";
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 1000);
+    }
+}
+
+clickHeart.addEventListener("click", (e) => {
+    if (typed) return;
+    typed = true;
+
+    const rect = clickHeart.getBoundingClientRect();
+    createSparkles(rect.left + rect.width / 2, rect.top);
+
+    typeText();
 });
 </script>
 
 </body>
 </html>
-
 
