@@ -5,7 +5,7 @@
 <title>Walentynka ❤️</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Dancing+Script:wght@600&display=swap');
 
 body {
     margin: 0;
@@ -58,11 +58,6 @@ button {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    transition: transform 0.2s;
-}
-
-button:hover {
-    transform: scale(1.1);
 }
 
 #yes {
@@ -90,8 +85,6 @@ button:hover {
     color: #e63946;
     font-size: 20px;
     animation: fall linear forwards;
-    z-index: 1;
-    user-select: none;
     pointer-events: none;
 }
 
@@ -112,34 +105,29 @@ button:hover {
     animation: pinkBG 5s infinite;
 }
 
-/* KLIKALNE SERCE */
+/* NOWE SERDUSZKO */
 .clickHeart {
-    font-size: 55px;
+    font-size: 60px;
     cursor: pointer;
-    margin: 20px 0;
-    animation: pulse 1.2s infinite;
+    margin: 15px 0;
+    animation: pulse 1.4s infinite;
 }
 
-/* WIADOMOŚĆ */
+/* TEKST „KLIKNIJ SERDUSZKO” */
+.hintText {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 10px;
+    animation: fadeIn 1s ease-out;
+}
+
+/* WIADOMOŚĆ – INNA CZCIONKA */
 .loveMessage {
-    font-family: 'Pacifico', cursive;
-    font-size: 30px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 32px;
     color: #e63946;
     margin-top: 20px;
     min-height: 40px;
-}
-
-/* ISKIERKI */
-.sparkle {
-    position: fixed;
-    pointer-events: none;
-    font-size: 18px;
-    animation: sparkleAnim 1s forwards;
-}
-
-@keyframes sparkleAnim {
-    0% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: translateY(-30px) scale(0.3); }
 }
 </style>
 </head>
@@ -162,7 +150,10 @@ button:hover {
 
     <h1>JUPIII! 🥰💕</h1>
 
-    <div id="clickHeart" class="clickHeart">❤️</div>
+    <div id="hintText" class="hintText">Kliknij serduszko 💖</div>
+
+    <!-- INNE SERCE -->
+    <div id="clickHeart" class="clickHeart">💗</div>
 
     <div id="loveMessage" class="loveMessage"></div>
 
@@ -177,6 +168,7 @@ const secondPage = document.getElementById("secondPage");
 
 const clickHeart = document.getElementById("clickHeart");
 const loveMessage = document.getElementById("loveMessage");
+const hintText = document.getElementById("hintText");
 
 const text = "jesteś najlepszym co mnie spotkało 💖🥹✨";
 let index = 0;
@@ -209,7 +201,6 @@ yesButton.addEventListener("click", () => {
     setInterval(createHeart, 80);
 });
 
-/* EFEKT PISANIA */
 function typeText() {
     if (index < text.length) {
         loveMessage.innerHTML += text.charAt(index);
@@ -218,30 +209,16 @@ function typeText() {
     }
 }
 
-/* ISKIERKI */
-function createSparkles(x, y) {
-    for (let i = 0; i < 8; i++) {
-        const s = document.createElement("div");
-        s.classList.add("sparkle");
-        s.innerHTML = "✨";
-        s.style.left = x + (Math.random() * 40 - 20) + "px";
-        s.style.top = y + (Math.random() * 40 - 20) + "px";
-        document.body.appendChild(s);
-        setTimeout(() => s.remove(), 1000);
-    }
-}
-
-clickHeart.addEventListener("click", (e) => {
+clickHeart.addEventListener("click", () => {
     if (typed) return;
     typed = true;
 
-    const rect = clickHeart.getBoundingClientRect();
-    createSparkles(rect.left + rect.width / 2, rect.top);
-
+    hintText.style.display = "none";
     typeText();
 });
 </script>
 
 </body>
 </html>
+
 
