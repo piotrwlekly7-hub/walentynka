@@ -71,7 +71,7 @@ button:hover {
 #no {
     background-color: #e63946;
     color: white;
-    position: fixed;
+    position: static;
     z-index: 999;
 }
 
@@ -99,6 +99,16 @@ button:hover {
         opacity: 0;
     }
 }
+
+@keyframes pinkBG {
+    0% { background: #ff9a9e; }
+    50% { background: #fbc2eb; }
+    100% { background: #ff9a9e; }
+}
+
+.pinkMode {
+    animation: pinkBG 5s infinite;
+}
 </style>
 </head>
 
@@ -120,8 +130,8 @@ button:hover {
 <div id="secondPage" class="container">
 
     <img class="gif" 
-    src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" 
-    alt="kotek2">
+    src="https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif" 
+    alt="smiejacy sie pies">
 
     <img class="gif" 
     src="https://media.giphy.com/media/l4FGpP4lxGGgK5CBW/giphy.gif" 
@@ -130,7 +140,6 @@ button:hover {
     <h1>JUPIII! 🥰💕</h1>
     <p>KOCHAM CIĘ NAJMOCNIEJ</p>
     <p>TWOJ PIOTRR 😘</p>
-    
 
 </div>
 
@@ -145,6 +154,8 @@ noButton.style.left = "60%";
 noButton.style.top = "60%";
 
 noButton.addEventListener("mouseover", () => {
+    noButton.style.position = "fixed";
+
     const buttonWidth = noButton.offsetWidth;
     const buttonHeight = noButton.offsetHeight;
 
@@ -182,6 +193,8 @@ yesButton.addEventListener("click", () => {
 
     secondPage.style.display = "block";
 
+    document.body.classList.add("pinkMode");
+
     clearInterval(normalHearts);
 
     setInterval(createHeart, 80);
@@ -190,4 +203,5 @@ yesButton.addEventListener("click", () => {
 
 </body>
 </html>
+
 
