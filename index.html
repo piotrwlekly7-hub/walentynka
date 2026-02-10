@@ -104,6 +104,7 @@ button:hover {
 
 <body>
 
+<!-- PIERWSZA STRONA -->
 <div id="firstPage" class="container">
     <img class="gif" 
     src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" 
@@ -115,14 +116,21 @@ button:hover {
     <button id="no">Nie 😢</button>
 </div>
 
+<!-- DRUGA STRONA -->
 <div id="secondPage" class="container">
+
     <img class="gif" 
     src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" 
     alt="kotek2">
 
+    <img class="gif" 
+    src="https://media.giphy.com/media/l4FGpP4lxGGgK5CBW/giphy.gif" 
+    alt="przytulone kotki">
+
     <h1>JUPIII! 🥰💕</h1>
     <p>KOCHAM CIĘ TWOJ PIOTRR 😘</p>
     <p>Najlepsza walentynka na świecie! 💖</p>
+
 </div>
 
 <script>
@@ -165,20 +173,16 @@ function createHeart() {
     }, 5000);
 }
 
-// NORMALNA ILOŚĆ NA START
 let normalHearts = setInterval(createHeart, 400);
 
-// PO KLIKNIĘCIU "TAK" – WIĘCEJ KONFETTI
 yesButton.addEventListener("click", () => {
     firstPage.style.display = "none";
     noButton.style.display = "none";
 
     secondPage.style.display = "block";
 
-    // zatrzymujemy normalne tempo
     clearInterval(normalHearts);
 
-    // DUŻO WIĘCEJ SERDUSZEK NA DRUGIEJ STRONIE
     setInterval(createHeart, 80);
 });
 </script>
